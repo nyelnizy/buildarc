@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 class RecentlyViewedService {
   final FirebaseFirestore firestore;
   RecentlyViewedService(this.firestore);
-
+  
   checkIfAlreadyViewed(
       String userId, String projectId, String title, String subtitle) async {
     var views = firestore.collection("user_drawing_views");

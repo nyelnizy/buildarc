@@ -29,17 +29,32 @@ class DrawingsCatalogBloc
   _viewDrawing(
       ViewDrawingEvent event, Emitter<DrawingsCatalogState> emit) async {
     try {
+      FetchedDrawingsCatalogState? originalState;
+      // keep track of the prev state
+      if(state is FetchedDrawingsCatalogState){
+        originalState = state as FetchedDrawingsCatalogState;
+      }
+      emit(ViewingDrawingState());
       var hasViewed = await recentlyViewedService.checkIfAlreadyViewed(
-          event.userId!, event.projectId!, event.title!, event.subtitle!);
+          event.userId!, event.selectedProject.id!, event.title!, event.subtitle!);
       // check if user has already viewed this drawing, if not, view it.
       if (!hasViewed) {
         await recentlyViewedService.viewDrawing(RecentlyViewed(
             userId: event.userId!,
-            projectId: event.projectId!,
+            projectId: event.selectedProject.id,
             drawing: Drawing(
                 title: event.title,
                 subtitle: event.subtitle,
                 drawingThumbnailUrl: event.thumbnail)));
+
+        // emit to trigger recent views to reload on home screen
+        emit(ViewedDrawingState(event.selectedProject));
+      }
+      // emit to keep keep the original state of this bloc
+      // else current state would be ViewedDrawingState/ViewingDrawing state
+      // this will cause the shimmer on the drawing list page to show instead of the list of drawings.
+      if(originalState != null){
+        emit(originalState);
       }
     } catch (e) {
       // we could log this in an error reporting system like sentry.

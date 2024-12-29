@@ -29,7 +29,6 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     if (currentUser == null) {
       return emit(HomeScreenFetchErrorState("User doesn't exist"));
     }
-
     emit(FetchingHomeScreenContentState());
     String userId = currentUser.uid;
     Query<HomeScreenData> homeScreenQuery = FirebaseFirestore.instance

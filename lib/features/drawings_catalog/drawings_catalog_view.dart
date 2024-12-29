@@ -132,7 +132,7 @@ class DrawingGrid extends StatelessWidget {
             final user = FirebaseAuth.instance.currentUser;
             var bloc =  context.read<DrawingsCatalogBloc>();
             var accBloc =  context.read<AccountContextBloc>();
-            bloc.add(ViewDrawingEvent((accBloc.state as AccountContextLoadedState).selectedProject!.id, user!.uid, drawing.title, drawing.discipline, drawing.thumbnailUrl));
+            bloc.add(ViewDrawingEvent((accBloc.state as AccountContextLoadedState).selectedProject!, user!.uid, drawing.title, drawing.discipline, drawing.thumbnailUrl));
           },
           child: Card(
             child: Column(

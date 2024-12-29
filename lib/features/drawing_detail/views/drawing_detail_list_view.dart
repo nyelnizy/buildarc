@@ -48,7 +48,7 @@ class DrawingsCatalog extends StatelessWidget {
                   final user = FirebaseAuth.instance.currentUser;
                   var bloc =  context.read<DrawingsCatalogBloc>();
                   var accBloc =  context.read<AccountContextBloc>();
-                  bloc.add(ViewDrawingEvent((accBloc.state as AccountContextLoadedState).selectedProject!.id, user!.uid, item.title, item.discipline, item.thumbnailUrl));
+                  bloc.add(ViewDrawingEvent((accBloc.state as AccountContextLoadedState).selectedProject!, user!.uid, item.title, item.discipline, item.thumbnailUrl));
                   onLoadSheet?.call();
                 },
               );
