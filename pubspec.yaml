@@ -64,9 +64,12 @@ dependencies:
   flutter_hooks: ^0.20.3
   font_awesome_flutter: ^10.6.0
   http: ^1.1.0
+  focus_detector: ^2.0.1
+  fake_cloud_firestore: ^2.5.2
 
 
 dev_dependencies:
+  mockito: ^5.3.2
   flutter_test:
     sdk: flutter
 

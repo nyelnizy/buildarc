@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:ardennes/auth_screen.dart';
 import 'package:ardennes/features/drawing_detail/drawing_detail_bloc.dart';
 import 'package:ardennes/features/drawing_detail/drawing_detail_view.dart';
@@ -5,6 +7,7 @@ import 'package:ardennes/features/drawings_catalog/drawings_catalog_bloc.dart';
 import 'package:ardennes/features/drawings_catalog/drawings_catalog_event.dart'
     as dc_event;
 import 'package:ardennes/features/drawings_catalog/drawings_catalog_view.dart';
+import 'package:ardennes/features/home_screen/bloc.dart';
 import 'package:ardennes/features/home_screen/view.dart';
 import 'package:ardennes/injection.dart';
 import 'package:ardennes/libraries/account_context/bloc.dart';
@@ -26,6 +29,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:go_router/go_router.dart';
 
 import 'features/drawing_detail/drawing_detail_event.dart' as dd_event;
+import 'features/home_screen/event.dart';
 import 'firebase_options.dart';
 
 void main() async {

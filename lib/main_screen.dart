@@ -38,7 +38,6 @@ class _MainScreenState extends State<MainScreen> {
 
 class _CompactLayout extends StatefulWidget {
   final StatefulNavigationShell navigationShell;
-
   const _CompactLayout({Key? key, required this.navigationShell})
       : super(key: key);
 

@@ -3,6 +3,7 @@ import 'package:ardennes/libraries/account_context/state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:focus_detector/focus_detector.dart';
 import 'package:go_router/go_router.dart';
 
 import 'bloc.dart';
@@ -21,7 +22,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (BuildContext context) => HomeScreenBloc(),
-      child: Builder(builder: (context) => _HomeScreenContent()),
+      child: Builder(builder: (context) => FocusDetector(
+          onFocusGained: (){
+            setState(() {
+
+            });
+          },
+          child: _HomeScreenContent())),
     );
   }
 }

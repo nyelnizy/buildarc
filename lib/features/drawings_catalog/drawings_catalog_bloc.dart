@@ -114,9 +114,4 @@ class DrawingsCatalogBloc
       emit(DrawingsCatalogFetchErrorState(e.toString()));
     }
   }
-  @override
-  void onChange(Change<DrawingsCatalogState> change) {
-    print(change);
-    super.onChange(change);
-  }
 }
