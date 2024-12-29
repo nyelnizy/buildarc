@@ -33,12 +33,12 @@ dependencies:
 
 
   # firebase
-  firebase_core: ^2.23.0
-  firebase_auth: ^4.14.1
+  firebase_core: ^2.25.4
+  firebase_auth: ^4.17.5
   firebase_ui_auth: ^1.10.0
   firebase_ui_oauth_google: ^1.2.14
-  cloud_firestore: ^4.13.3
-  firebase_storage: ^11.5.4
+  cloud_firestore: ^4.15.5
+  firebase_storage: ^11.6.2
   google_sign_in: ^6.1.6
 
   # environment variables

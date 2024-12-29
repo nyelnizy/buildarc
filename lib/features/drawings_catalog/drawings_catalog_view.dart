@@ -3,6 +3,7 @@ import 'package:ardennes/libraries/account_context/state.dart';
 import 'package:ardennes/libraries/core_ui/image_downloading/image_firebase.dart';
 import 'package:ardennes/models/drawings/drawing_item.dart';
 import 'package:ardennes/models/drawings/drawings_catalog_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
@@ -126,6 +127,12 @@ class DrawingGrid extends StatelessWidget {
                 },
               ).toString(),
             );
+            // when a user clicks on a drawing from the list page,
+            // directly view the drawing instead of clicking on it again on the details page
+            final user = FirebaseAuth.instance.currentUser;
+            var bloc =  context.read<DrawingsCatalogBloc>();
+            var accBloc =  context.read<AccountContextBloc>();
+            bloc.add(ViewDrawingEvent((accBloc.state as AccountContextLoadedState).selectedProject!.id, user!.uid, drawing.title, drawing.discipline, drawing.thumbnailUrl));
           },
           child: Card(
             child: Column(

@@ -29,3 +29,11 @@ class UpdateSelectedTagEvent extends DrawingsCatalogEvent {
   final DrawingTag? selectedTag;
   UpdateSelectedTagEvent(this.selectedTag);
 }
+class ViewDrawingEvent extends DrawingsCatalogEvent {
+  final String? projectId;
+  final String? userId;
+  final String? title;
+  final String? subtitle;
+  final String? thumbnail;
+  ViewDrawingEvent(this.projectId,this.userId,this.title,this.subtitle,this.thumbnail);
+}

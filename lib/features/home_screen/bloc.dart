@@ -33,7 +33,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     emit(FetchingHomeScreenContentState());
     String userId = currentUser.uid;
     Query<HomeScreenData> homeScreenQuery = FirebaseFirestore.instance
-        .collection('home_screens')
+        .collection('user_drawing_views')
         .where('user_id', isEqualTo: userId)
         .where('project_id', isEqualTo: event.selectedProject.id)
         .withConverter(
