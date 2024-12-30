@@ -10,7 +10,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../injection.dart';
 import '../../drawings_catalog/drawings_catalog_event.dart';
+import '../../recent_views/recent_views_bloc.dart';
 
 class DrawingsCatalog extends StatelessWidget {
   final ScrollController? scrollController;
@@ -46,7 +48,7 @@ class DrawingsCatalog extends StatelessWidget {
                         projectId: state.drawingsCatalog.projectId),
                   );
                   final user = FirebaseAuth.instance.currentUser;
-                  var bloc =  context.read<DrawingsCatalogBloc>();
+                  var bloc =  getIt<DrawingsCatalogBloc>();
                   var accBloc =  context.read<AccountContextBloc>();
                   bloc.add(ViewDrawingEvent((accBloc.state as AccountContextLoadedState).selectedProject!, user!.uid, item.title, item.discipline, item.thumbnailUrl));
                   onLoadSheet?.call();

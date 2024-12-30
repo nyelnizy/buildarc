@@ -1,20 +1,29 @@
 import 'package:ardennes/features/drawings_catalog/drawings_catalog_bloc.dart';
 import 'package:ardennes/features/drawings_catalog/drawings_catalog_event.dart';
+import 'package:ardennes/features/home_screen/bloc.dart';
 import 'package:ardennes/libraries/drawing/drawing_catalog_loader.dart';
 import 'package:ardennes/models/projects/project_metadata.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:mockito/mockito.dart';
+import 'mocks.mocks.dart';
 import 'recently_viewed_bloc_test.mocks.mocks.dart'; // Import generated mocks
 
 void main() {
   late MockRecentlyViewedService mockRecentlyViewedService;
   late DrawingsCatalogBloc bloc;
+  late MockHomeScreenBloc mockHomeScreenBloc;
 
   setUp(() {
     mockRecentlyViewedService = MockRecentlyViewedService();
     //no need to mock this service, it is not being used.
     var dcs = DrawingCatalogService();
     bloc = DrawingsCatalogBloc(dcs, mockRecentlyViewedService);
+    mockHomeScreenBloc = MockHomeScreenBloc();
+
+    // Register mocks in GetIt
+    final getIt = GetIt.instance;
+    getIt.registerSingleton<HomeScreenBloc>(mockHomeScreenBloc);
   });
 
   test('should call viewDrawing when user has not viewed the drawing',
@@ -120,5 +129,8 @@ void main() {
     // verify code does not proceed, and so view does not get called.
     // if we had a log service, we could mock that and verify a log/reporting function was called
     verifyNever(mockRecentlyViewedService.viewDrawing(any));
+  });
+  tearDown((){
+    GetIt.instance.reset();
   });
 }

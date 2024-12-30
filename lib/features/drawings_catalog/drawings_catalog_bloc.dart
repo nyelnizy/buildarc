@@ -5,6 +5,11 @@ import 'package:ardennes/models/drawings/recently_viewed_model.dart';
 import 'package:ardennes/models/projects/project_metadata.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../injection.dart';
+import '../../models/screens/home_screen_data.dart';
+import '../home_screen/bloc.dart';
+import '../home_screen/event.dart' as home;
+import '../home_screen/state.dart';
 import 'drawings_catalog_event.dart';
 import 'drawings_catalog_state.dart';
 
@@ -25,43 +30,37 @@ class DrawingsCatalogBloc
     on<UpdateSelectedVersionEvent>(_updateSelectedVersion);
     on<ViewDrawingEvent>(_viewDrawing);
   }
-
   _viewDrawing(
       ViewDrawingEvent event, Emitter<DrawingsCatalogState> emit) async {
     try {
+
       var hasViewed = await recentlyViewedService.checkIfAlreadyViewed(
           event.userId!, event.selectedProject.id!, event.title!, event.subtitle!);
-
-      FetchedDrawingsCatalogState? fetchedState;
-      if(state is FetchedDrawingsCatalogState){
-        fetchedState = state as FetchedDrawingsCatalogState;
-      }
       // check if user has already viewed this drawing, if not, view it.
       if (!hasViewed) {
+        var drawing = Drawing(
+            title: event.title,
+            subtitle: event.subtitle,
+            drawingThumbnailUrl: event.thumbnail);
         await recentlyViewedService.viewDrawing(RecentlyViewed(
             userId: event.userId!,
             projectId: event.selectedProject.id,
-            drawing: Drawing(
-                title: event.title,
-                subtitle: event.subtitle,
-                drawingThumbnailUrl: event.thumbnail)));
-        emit(ViewedDrawingState(event.selectedProject));
+            drawing: drawing));
+        var drawingForHomeScreen = RecentlyViewedDrawingTile(
+          title: drawing.title!,
+          subtitle: drawing.subtitle!,
+          drawingThumbnailUrl: drawing.drawingThumbnailUrl!,
+        );
+        var bloc = getIt<HomeScreenBloc>();
+        bloc.add(home.UpdateRecentViews(drawingForHomeScreen));
 
-        // wait a bit for FetchHomeScreenContentEvent to react before changing current state
-        if(fetchedState != null){
-          await Future.delayed(const Duration(milliseconds: 300),(){
-            emit(fetchedState!);
-          });
-        }
       }
 
-    } catch (e) {
+    } on Exception catch (e) {
       // we could log this in an error reporting system like sentry.
       //eg. loggingService.log(e)
-      print(e);
     }
   }
-
   void _init(InitEvent event, Emitter<DrawingsCatalogState> emit) async {
     emit(state.clone());
   }

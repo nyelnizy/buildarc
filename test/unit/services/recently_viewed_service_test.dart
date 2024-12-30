@@ -1,4 +1,5 @@
 import 'package:ardennes/features/drawings_catalog/recently_viewed_drawing_service.dart';
+import 'package:ardennes/utils/common_firestore_collections.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:ardennes/models/drawings/recently_viewed_model.dart';
@@ -23,7 +24,7 @@ void main() {
 
     test('checkIfAlreadyViewed returns true if drawing has been viewed', () async {
       // add a mock document to FakeFirestore
-      await fakeFirestore.collection('user_drawing_views').add({
+      await fakeFirestore.collection(recentViews).add({
         'project_id': 'project123',
         'user_id': 'user123',
         'drawings': [
@@ -39,7 +40,7 @@ void main() {
     test('checkIfAlreadyViewed returns false if drawing has not been viewed', () async {
       // add a mock document to FakeFirestore
       // represents currently viewed drawings for a specific project by user
-      await fakeFirestore.collection('user_drawing_views').add({
+      await fakeFirestore.collection(recentViews).add({
         'project_id': 'project123',
         'user_id': 'user123',
         'drawings': [
@@ -62,7 +63,7 @@ void main() {
       await service.viewDrawing(view);
 
       // verify the document was added to FakeFirestore
-      final snapshot = await fakeFirestore.collection('user_drawing_views').get();
+      final snapshot = await fakeFirestore.collection(recentViews).get();
       expect(snapshot.docs.isNotEmpty, true);
       final data = snapshot.docs.first.data();
       expect(data['drawings'].length, 1);

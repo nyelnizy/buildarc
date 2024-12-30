@@ -9,6 +9,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../injection.dart';
+import '../recent_views/recent_views_bloc.dart';
 import 'drawings_catalog_bloc.dart';
 import 'drawings_catalog_event.dart';
 import 'drawings_catalog_state.dart';
@@ -130,7 +132,7 @@ class DrawingGrid extends StatelessWidget {
             // when a user clicks on a drawing from the list page,
             // directly view the drawing instead of clicking on it again on the details page
             final user = FirebaseAuth.instance.currentUser;
-            var bloc =  context.read<DrawingsCatalogBloc>();
+            var bloc =  getIt<DrawingsCatalogBloc>();
             var accBloc =  context.read<AccountContextBloc>();
             bloc.add(ViewDrawingEvent((accBloc.state as AccountContextLoadedState).selectedProject!, user!.uid, drawing.title, drawing.discipline, drawing.thumbnailUrl));
           },

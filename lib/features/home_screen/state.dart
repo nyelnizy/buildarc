@@ -1,6 +1,7 @@
 import 'package:ardennes/models/screens/home_screen_data.dart';
+import 'package:equatable/equatable.dart';
 
-class HomeScreenState {
+class HomeScreenState implements Equatable {
   HomeScreenState init() {
     return HomeScreenState();
   }
@@ -8,6 +9,12 @@ class HomeScreenState {
   HomeScreenState clone() {
     return HomeScreenState();
   }
+
+  @override
+  List<Object?> get props => [];
+
+  @override
+  bool? get stringify => false;
 }
 
 class FetchingHomeScreenContentState extends HomeScreenState {
@@ -30,6 +37,8 @@ class FetchedHomeScreenContentState extends HomeScreenState {
       recentlyViewedDrawingTiles: recentlyViewedDrawingTiles,
     );
   }
+  @override
+  List<Object?> get props => [recentlyViewedDrawingTiles];
 }
 
 class HomeScreenFetchErrorState extends HomeScreenState {

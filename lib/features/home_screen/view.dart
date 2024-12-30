@@ -1,5 +1,8 @@
 import 'package:ardennes/features/drawings_catalog/drawings_catalog_bloc.dart';
 import 'package:ardennes/features/drawings_catalog/drawings_catalog_state.dart';
+import 'package:ardennes/features/home_screen/state.dart';
+import 'package:ardennes/features/recent_views/recent_views_bloc.dart';
+import 'package:ardennes/injection.dart';
 import 'package:ardennes/libraries/account_context/bloc.dart';
 import 'package:ardennes/libraries/account_context/state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -22,17 +25,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => HomeScreenBloc(),
+      create: (BuildContext context) => getIt<HomeScreenBloc>(),
       child: Builder(
           builder: (context) =>
-              BlocListener<DrawingsCatalogBloc, DrawingsCatalogState>(
-                listener: (context, state) {
-                  if(state is ViewedDrawingState){
-                    context.read<HomeScreenBloc>().add(FetchHomeScreenContentEvent(state.project));
-                  }
-                },
-                child: _HomeScreenContent(),
-              )),
+              _HomeScreenContent()),
     );
   }
 }

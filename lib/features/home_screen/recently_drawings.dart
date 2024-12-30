@@ -2,6 +2,7 @@ import 'package:ardennes/features/home_screen/state.dart';
 import 'package:ardennes/libraries/core_ui/image_downloading/image_firebase.dart';
 import 'package:ardennes/libraries/core_ui/shimmer/bar_shimmer.dart';
 import 'package:ardennes/libraries/extensions/scoped.dart';
+import 'package:ardennes/route_config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -43,7 +44,7 @@ class RecentlyViewedDrawings extends StatelessWidget {
                         itemCount: state.recentlyViewedDrawingTiles.length,
                         itemBuilder: (BuildContext context, int index) =>
                             state.recentlyViewedDrawingTiles[index].let((tile) {
-                          return _RecentlyViewedDrawingTile(
+                          return RecentlyViewedDrawingTile(
                               title: tile.title,
                               subtitle: tile.subtitle,
                               drawingThumbnailUrl: tile.drawingThumbnailUrl);
@@ -67,8 +68,8 @@ class RecentlyViewedDrawings extends StatelessWidget {
   }
 }
 
-class _RecentlyViewedDrawingTile extends StatelessWidget {
-  const _RecentlyViewedDrawingTile({
+class RecentlyViewedDrawingTile extends StatelessWidget {
+  const RecentlyViewedDrawingTile({
     Key? key,
     required this.title,
     required this.subtitle,
@@ -83,7 +84,7 @@ class _RecentlyViewedDrawingTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {
-          context.go(
+          router.go(
             Uri(
               path: '/drawings/sheet',
               queryParameters: {

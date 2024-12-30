@@ -1,4 +1,6 @@
+import 'package:ardennes/injection.dart';
 import 'package:ardennes/models/projects/project_metadata.dart';
+import 'package:ardennes/utils/common_firestore_collections.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +15,23 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
 
   HomeScreenBloc() : super(HomeScreenState().init()) {
     on<InitEvent>(_init);
+    on<UpdateRecentViews>(_updateRecentViews);
     on<FetchHomeScreenContentEvent>(_fetchHomeScreenContent);
+  }
+
+  _updateRecentViews(UpdateRecentViews event, Emitter<HomeScreenState> emit) {
+    List<RecentlyViewedDrawingTile> list = [];
+    var tile = event.recentlyViewedDrawingTile;
+    if (state is FetchedHomeScreenContentState) {
+      var homeState = state as FetchedHomeScreenContentState;
+      list = [
+        ...homeState.recentlyViewedDrawingTiles,
+        tile
+      ];
+    }else{
+      list.add(tile);
+    }
+    emit(FetchedHomeScreenContentState(recentlyViewedDrawingTiles: list));
   }
 
   void _init(InitEvent event, Emitter<HomeScreenState> emit) async {
@@ -33,7 +51,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
     emit(FetchingHomeScreenContentState());
     String userId = currentUser.uid;
     Query<HomeScreenData> homeScreenQuery = FirebaseFirestore.instance
-        .collection('user_drawing_views')
+        .collection(recentViews)
         .where('user_id', isEqualTo: userId)
         .where('project_id', isEqualTo: event.selectedProject.id)
         .withConverter(
@@ -56,5 +74,4 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       emit(HomeScreenFetchErrorState(e.toString()));
     }
   }
-
 }
