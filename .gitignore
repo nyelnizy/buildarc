@@ -54,3 +54,5 @@ app.*.map.json
 .firebaserc
 .metadata
 raw-pdf/permit-set/extraction
+storage.rules
+firestore-debug.log
