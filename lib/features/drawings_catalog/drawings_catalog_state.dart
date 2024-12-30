@@ -1,5 +1,6 @@
 import 'package:ardennes/models/drawings/drawing_item.dart';
 import 'package:ardennes/models/drawings/drawings_catalog_data.dart';
+import 'package:ardennes/models/projects/project_metadata.dart';
 
 class DrawingsCatalogUIState {
   DrawingVersion? selectedVersion;
@@ -62,4 +63,10 @@ class DrawingsCatalogFetchErrorState extends DrawingsCatalogState {
   DrawingsCatalogFetchErrorState clone() {
     return DrawingsCatalogFetchErrorState(errorMessage);
   }
+}
+
+class ViewingDrawingState extends DrawingsCatalogState {}
+class ViewedDrawingState extends DrawingsCatalogState {
+  final ProjectMetadata project;
+  ViewedDrawingState(this.project);
 }

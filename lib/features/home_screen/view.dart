@@ -1,3 +1,4 @@
+import 'package:ardennes/injection.dart';
 import 'package:ardennes/libraries/account_context/bloc.dart';
 import 'package:ardennes/libraries/account_context/state.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -20,8 +21,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (BuildContext context) => HomeScreenBloc(),
-      child: Builder(builder: (context) => _HomeScreenContent()),
+      create: (BuildContext context) => getIt<HomeScreenBloc>(),
+      child: Builder(
+          builder: (context) =>
+              _HomeScreenContent()),
     );
   }
 }

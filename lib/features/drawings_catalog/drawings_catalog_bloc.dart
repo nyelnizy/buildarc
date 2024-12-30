@@ -1,8 +1,15 @@
+import 'package:ardennes/features/drawings_catalog/recently_viewed_drawing_service.dart';
 import 'package:ardennes/libraries/drawing/drawing_catalog_loader.dart';
 import 'package:ardennes/models/drawings/drawings_catalog_data.dart';
+import 'package:ardennes/models/drawings/recently_viewed_model.dart';
 import 'package:ardennes/models/projects/project_metadata.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../injection.dart';
+import '../../models/screens/home_screen_data.dart';
+import '../home_screen/bloc.dart';
+import '../home_screen/event.dart' as home;
+import '../home_screen/state.dart';
 import 'drawings_catalog_event.dart';
 import 'drawings_catalog_state.dart';
 
@@ -11,8 +18,9 @@ class DrawingsCatalogBloc
   DrawingsCatalogUIState savedUiState = DrawingsCatalogUIState();
   ProjectMetadata? savedSelectedProject;
   final DrawingCatalogService drawingCatalogService;
+  final RecentlyViewedService recentlyViewedService;
 
-  DrawingsCatalogBloc(this.drawingCatalogService)
+  DrawingsCatalogBloc(this.drawingCatalogService, this.recentlyViewedService)
       : super(DrawingsCatalogState().init()) {
     on<InitEvent>(_init);
     on<FetchDrawingsCatalogEvent>(_fetchDrawingCatalog);
@@ -20,8 +28,39 @@ class DrawingsCatalogBloc
     on<UpdateSelectedDisciplineEvent>(_updateSelectedDiscipline);
     on<UpdateSelectedTagEvent>(_updateSelectedTag);
     on<UpdateSelectedVersionEvent>(_updateSelectedVersion);
+    on<ViewDrawingEvent>(_viewDrawing);
   }
+  _viewDrawing(
+      ViewDrawingEvent event, Emitter<DrawingsCatalogState> emit) async {
+    try {
 
+      var hasViewed = await recentlyViewedService.checkIfAlreadyViewed(
+          event.userId!, event.selectedProject.id!, event.title!, event.subtitle!);
+      // check if user has already viewed this drawing, if not, view it.
+      if (!hasViewed) {
+        var drawing = Drawing(
+            title: event.title,
+            subtitle: event.subtitle,
+            drawingThumbnailUrl: event.thumbnail);
+        await recentlyViewedService.viewDrawing(RecentlyViewed(
+            userId: event.userId!,
+            projectId: event.selectedProject.id,
+            drawing: drawing));
+        var drawingForHomeScreen = RecentlyViewedDrawingTile(
+          title: drawing.title!,
+          subtitle: drawing.subtitle!,
+          drawingThumbnailUrl: drawing.drawingThumbnailUrl!,
+        );
+        var bloc = getIt<HomeScreenBloc>();
+        bloc.add(home.UpdateRecentViews(drawingForHomeScreen));
+
+      }
+
+    } on Exception catch (e) {
+      // we could log this in an error reporting system like sentry.
+      //eg. loggingService.log(e)
+    }
+  }
   void _init(InitEvent event, Emitter<DrawingsCatalogState> emit) async {
     emit(state.clone());
   }

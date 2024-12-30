@@ -13,6 +13,7 @@ import 'package:ardennes/libraries/core_ui/canvas/drawing_mode.dart';
 import 'package:ardennes/libraries/core_ui/canvas/sketch.dart';
 import 'package:ardennes/libraries/core_ui/icon_box/icon_box.dart';
 import 'package:ardennes/libraries/core_ui/window_size/window_size_calculator.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart' hide Image;
 import 'package:flutter_bloc/flutter_bloc.dart';

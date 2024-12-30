@@ -3,9 +3,15 @@ import 'package:ardennes/features/drawing_detail/drawing_detail_bloc.dart';
 import 'package:ardennes/features/drawing_detail/drawing_detail_event.dart';
 import 'package:ardennes/features/drawings_catalog/drawings_catalog_bloc.dart';
 import 'package:ardennes/features/drawings_catalog/drawings_catalog_state.dart';
+import 'package:ardennes/libraries/account_context/bloc.dart';
+import 'package:ardennes/libraries/account_context/state.dart';
 import 'package:ardennes/libraries/core_ui/image_downloading/image_firebase.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../injection.dart';
+import '../../drawings_catalog/drawings_catalog_event.dart';
 
 class DrawingsCatalog extends StatelessWidget {
   final ScrollController? scrollController;
@@ -40,6 +46,10 @@ class DrawingsCatalog extends StatelessWidget {
                         versionId: item.versionId,
                         projectId: state.drawingsCatalog.projectId),
                   );
+                  final user = FirebaseAuth.instance.currentUser;
+                  var bloc =  getIt<DrawingsCatalogBloc>();
+                  var accBloc =  context.read<AccountContextBloc>();
+                  bloc.add(ViewDrawingEvent((accBloc.state as AccountContextLoadedState).selectedProject!, user!.uid, item.title, item.discipline, item.thumbnailUrl));
                   onLoadSheet?.call();
                 },
               );
