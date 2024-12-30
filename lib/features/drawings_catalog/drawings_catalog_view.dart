@@ -10,7 +10,6 @@ import 'package:shimmer/shimmer.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../injection.dart';
-import '../recent_views/recent_views_bloc.dart';
 import 'drawings_catalog_bloc.dart';
 import 'drawings_catalog_event.dart';
 import 'drawings_catalog_state.dart';

@@ -12,7 +12,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../injection.dart';
 import '../../drawings_catalog/drawings_catalog_event.dart';
-import '../../recent_views/recent_views_bloc.dart';
 
 class DrawingsCatalog extends StatelessWidget {
   final ScrollController? scrollController;

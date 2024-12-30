@@ -1,20 +1,5 @@
 import 'dart:async';
-
-import 'package:ardennes/auth_screen.dart';
-import 'package:ardennes/features/drawing_detail/drawing_detail_bloc.dart';
-import 'package:ardennes/features/drawing_detail/drawing_detail_view.dart';
-import 'package:ardennes/features/drawings_catalog/drawings_catalog_bloc.dart';
-import 'package:ardennes/features/drawings_catalog/drawings_catalog_event.dart'
-    as dc_event;
-import 'package:ardennes/features/drawings_catalog/drawings_catalog_view.dart';
-import 'package:ardennes/features/home_screen/bloc.dart';
-import 'package:ardennes/features/home_screen/view.dart';
-import 'package:ardennes/features/recent_views/recent_views_bloc.dart';
-import 'package:ardennes/features/recent_views/recent_views_bloc.dart';
 import 'package:ardennes/injection.dart';
-import 'package:ardennes/libraries/account_context/bloc.dart';
-import 'package:ardennes/libraries/account_context/event.dart' as ac_event;
-import 'package:ardennes/main_screen.dart';
 import 'package:ardennes/models/accounts/fake_user_data.dart';
 import 'package:ardennes/models/companies/fake_company_data.dart';
 import 'package:ardennes/models/drawings/fake/fake_drawing_detail_data.dart';
@@ -27,12 +12,7 @@ import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:go_router/go_router.dart';
-
-import 'features/drawing_detail/drawing_detail_event.dart' as dd_event;
-import 'features/home_screen/event.dart';
 import 'firebase_options.dart';
 
 void main() async {

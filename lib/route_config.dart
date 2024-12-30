@@ -5,10 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:ardennes/features/drawings_catalog/drawings_catalog_event.dart'
 as dc_event;
 import 'package:ardennes/features/drawings_catalog/drawings_catalog_view.dart';
-import 'package:ardennes/features/home_screen/bloc.dart';
 import 'package:ardennes/features/home_screen/view.dart';
-import 'package:ardennes/features/recent_views/recent_views_bloc.dart';
-import 'package:ardennes/features/recent_views/recent_views_bloc.dart';
 import 'package:ardennes/injection.dart';
 import 'package:ardennes/libraries/account_context/bloc.dart';
 import 'package:ardennes/libraries/account_context/event.dart' as ac_event;
@@ -16,11 +13,6 @@ import 'auth_screen.dart';
 import 'features/drawing_detail/drawing_detail_bloc.dart';
 import 'features/drawing_detail/drawing_detail_view.dart';
 import 'features/drawings_catalog/drawings_catalog_bloc.dart';
-import 'features/drawings_catalog/drawings_catalog_view.dart';
-import 'features/home_screen/view.dart';
-import 'features/recent_views/recent_views_bloc.dart';
-import 'injection.dart';
-import 'libraries/account_context/bloc.dart';
 
 import 'features/drawing_detail/drawing_detail_event.dart' as dd_event;
 import 'main_screen.dart';

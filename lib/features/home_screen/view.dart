@@ -1,7 +1,3 @@
-import 'package:ardennes/features/drawings_catalog/drawings_catalog_bloc.dart';
-import 'package:ardennes/features/drawings_catalog/drawings_catalog_state.dart';
-import 'package:ardennes/features/home_screen/state.dart';
-import 'package:ardennes/features/recent_views/recent_views_bloc.dart';
 import 'package:ardennes/injection.dart';
 import 'package:ardennes/libraries/account_context/bloc.dart';
 import 'package:ardennes/libraries/account_context/state.dart';
