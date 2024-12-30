@@ -54,3 +54,5 @@ app.*.map.json
 .firebaserc
 .metadata
 raw-pdf/permit-set/extraction
+.idea
+.dart_tool
