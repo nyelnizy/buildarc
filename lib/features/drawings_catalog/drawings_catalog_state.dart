@@ -1,8 +1,6 @@
 import 'package:ardennes/models/drawings/drawing_item.dart';
 import 'package:ardennes/models/drawings/drawings_catalog_data.dart';
-import 'package:ardennes/models/drawings/recently_viewed_model.dart';
-
-import '../../models/projects/project_metadata.dart';
+import 'package:ardennes/models/projects/project_metadata.dart';
 
 class DrawingsCatalogUIState {
   DrawingVersion? selectedVersion;
@@ -68,9 +66,7 @@ class DrawingsCatalogFetchErrorState extends DrawingsCatalogState {
 }
 
 class ViewingDrawingState extends DrawingsCatalogState {}
-
 class ViewedDrawingState extends DrawingsCatalogState {
-  final ProjectMetadata selectedProject;
-
-  ViewedDrawingState(this.selectedProject);
+  final ProjectMetadata project;
+  ViewedDrawingState(this.project);
 }

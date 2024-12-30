@@ -14,6 +14,7 @@ class RecentlyViewedService {
         .where("project_id", isEqualTo: projectId)
         .where("user_id", isEqualTo: userId)
         .get();
+
     var record = allUserViews.docs.firstOrNull;
 
     // user has not viewed any drawings for this project yet
@@ -22,6 +23,7 @@ class RecentlyViewedService {
     }
     //there will be only one recently viewed record for each user
     var data = record.data();
+
     for (var d in data["drawings"]) {
       // because there is no specific ID for drawing view,
       // use title and subtitle to check if it is the same drawing,

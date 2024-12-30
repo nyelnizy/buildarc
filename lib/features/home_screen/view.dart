@@ -28,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
               BlocListener<DrawingsCatalogBloc, DrawingsCatalogState>(
                 listener: (context, state) {
                   if(state is ViewedDrawingState){
-                    context.read<HomeScreenBloc>().add(FetchHomeScreenContentEvent(state.selectedProject));
+                    context.read<HomeScreenBloc>().add(FetchHomeScreenContentEvent(state.project));
                   }
                 },
                 child: _HomeScreenContent(),

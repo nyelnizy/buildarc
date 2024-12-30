@@ -23,6 +23,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
   void _fetchHomeScreenContent(
       FetchHomeScreenContentEvent event, Emitter<HomeScreenState> emit) async {
     User? currentUser = FirebaseAuth.instance.currentUser;
+
     if (_currentSelectedProject == event.selectedProject) {
       return;
     }
@@ -39,6 +40,7 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
           fromFirestore: HomeScreenData.fromFirestore,
           toFirestore: HomeScreenData.toFirestore,
         );
+
     try {
       QuerySnapshot<HomeScreenData> querySnapshot = await homeScreenQuery.get();
       HomeScreenData? homeScreenData = querySnapshot.docs.firstOrNull?.data();
@@ -54,4 +56,5 @@ class HomeScreenBloc extends Bloc<HomeScreenEvent, HomeScreenState> {
       emit(HomeScreenFetchErrorState(e.toString()));
     }
   }
+
 }
